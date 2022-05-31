@@ -129,4 +129,4 @@ dmypy.json
 .pyre/
 
 # chaves de acesso
-TwitterStream/authKeys.py
+./TwitterStream/authKeys.py
