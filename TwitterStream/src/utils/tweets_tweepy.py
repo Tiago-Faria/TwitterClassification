@@ -19,7 +19,7 @@ def get_home_timeline() -> tweepy.Response:
     Returns:
         tweepy.Response: tweepy object containing the tweets and some meta data
     """
-    return client.get_home_timeline()
+    return client.get_home_timeline(max_results = 20)
 
 
 def get_recent_timeline(since_id) -> tweepy.Response:
@@ -31,4 +31,5 @@ def get_recent_timeline(since_id) -> tweepy.Response:
     Returns:
         tweepy.Response: tweepy object containing the tweets and some meta data
     """
+    print("getting recent timeline")
     return client.get_home_timeline(since_id = since_id)
