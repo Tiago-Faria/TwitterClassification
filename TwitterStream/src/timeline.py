@@ -10,6 +10,10 @@ def print_tweet(tweet):
     print(tweet.text)
     print(' --- ')
 
+def print_all(tweets):
+    for tweet in reversed(tweets):
+        print_tweet(tweet)
+
 def remove_links_from_text(text):
     http_inicio = text.find('https://')
     while(http_inicio != -1):
@@ -47,8 +51,7 @@ def show_recent_timeline() -> int:
     response = get_home_timeline()
     newest_id = response.meta['newest_id']
     tweets = process_tweets(response.data)
-    for tweet in reversed(tweets):
-        print_tweet(tweet)
+    print_all(tweets)
     return newest_id
 
 
