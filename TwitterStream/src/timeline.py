@@ -30,7 +30,10 @@ def process_tweets(tweets):
         tweet.text = remove_links_from_text(tweet.text)
     return tweets
 
-def start_receiver_loop(newest_id):
+def start_receiver_loop():
+    
+    # TODO - get newest_id
+    newest_id = 321321
     while (True):
         response = get_recent_timeline(since_id = newest_id)
 
@@ -49,15 +52,13 @@ def show_recent_timeline() -> int:
         int: Id of the newest tweet
     """
     response = get_home_timeline()
-    newest_id = response.meta['newest_id']
     tweets = process_tweets(response.data)
     print_all(tweets)
-    return newest_id
 
 
 def __main__():
-    newest_id = show_recent_timeline()
-    start_receiver_loop(newest_id)
+    show_recent_timeline()
+    start_receiver_loop()
 
     
 
