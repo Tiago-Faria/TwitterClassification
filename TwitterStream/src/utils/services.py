@@ -77,7 +77,7 @@ class TweetStreamer(tweepy.StreamingClient):
         if(time.time() - self.last_save >= 20):
             self.save_tweets(timestamp = time_now)
     
-    def on_closed(self):
+    def on_closed(self, response):
         self.save_tweets()
 
     def start(self, threaded=True):
