@@ -20,6 +20,7 @@ class TweetHandler:
         for tweet in tweet_list:
             text = tweet.text
             text = TextHandler.remove_links(text)
+            text = TextHandler.remove_substr_from_text(text, '\n')
             #text = TextHandler.remove_tokens(text)
             #text = TextHandler.remove_ponctuations(text)
             tweet.text = text
@@ -29,11 +30,11 @@ class TweetHandler:
 
         columns = ['id', 'text']
         if (not os.path.exists(file_path)):
-            with open(file_path, 'w', encoding="utf-8") as csvfile:
+            with open(file_path, 'w', encoding="utf-8", newline='') as csvfile:
                 writer = csv.writer(csvfile)
                 writer.writerow(columns)
         
-        with open(file_path, 'a', encoding="utf-8") as csvfile:
+        with open(file_path, 'a', encoding="utf-8", newline='') as csvfile:
             writer = csv.writer(csvfile)
             for tweet in tweet_list:
                  writer.writerow([tweet.id, str(tweet.text)])
@@ -53,3 +54,6 @@ class TextHandler:
             text = text[:http_inicio] + '__link__' + text[http_inicio + http_len:]
             http_inicio = text.find('https://')
         return text
+
+    def remove_substr_from_text(text,substr):
+        return text.replace(substr,' ')
