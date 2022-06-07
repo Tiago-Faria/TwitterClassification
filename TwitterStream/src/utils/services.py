@@ -63,7 +63,7 @@ class TweetReader():
 class TweetStreamer(tweepy.StreamingClient):
     
     def __init__(self, file_path):
-        super.__init__(TwitterAccess.bearer_token)
+        super().__init__(TwitterAccess.bearer_token)
         self.file_path = file_path
         self.tweets = []
         self.last_save = time.time()
@@ -77,4 +77,9 @@ class TweetStreamer(tweepy.StreamingClient):
         if(time_now - self.last_save >= 60):
             TweetHandler.to_csv(self.tweets, self.file_path)
             self.last_save = time_now
-        
+    
+    def start(self, threaded=True):
+        super().sample(threaded)
+    
+    def stop(self):
+        super().disconnect()
