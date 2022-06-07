@@ -1,20 +1,26 @@
-import configparser
 import tweepy
+from src.config import TwitterAccess
+
+
+class TweepyConnector:
+    
+    def get_client():
+        client = tweepy.Client(TwitterAccess.bearer_token,
+                               TwitterAccess.api_key,
+                               TwitterAccess.api_key_secret, 
+                               TwitterAccess.access_token, 
+                               TwitterAccess.access_token_secret)
+        return client
+    
+    def get_streaming_client():
+        streamer = tweepy.StreamingClient(TwitterAccess.bearer_token)
+        return streamer
+
 
 class TweetReader():
-
+    
     def __init__(self):
-        config = configparser.ConfigParser()
-        config.read('TwitterStream/src/config.ini') 
-
-        bearer_token = config['your.keys']['bearer_token']
-        api_key = config['your.keys']['api_key']
-        api_key_secret = config['your.keys']['api_key_secret']
-        access_token = config['your.keys']['access_token']
-        access_token_secret = config['your.keys']['access_token_secret']
-
-        self.client = tweepy.Client(bearer_token, api_key, api_key_secret, access_token, access_token_secret)
-
+        self.client = TweepyConnector.get_client()
 
     def get_home_timeline(self) -> tweepy.Response:
         """Get tweets from the timeline associated with the api_key
@@ -48,3 +54,11 @@ class TweetReader():
             int: newest received tweet id
         """
         return self.newest_id
+
+
+
+
+class TweetStreamer:
+    
+    def __init__(self):
+        self.streamer = TweepyConnector.get_streaming_client()
