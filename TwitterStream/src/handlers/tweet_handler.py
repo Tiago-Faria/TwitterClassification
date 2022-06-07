@@ -18,7 +18,7 @@ class TweetHandler:
         tweet_list = [tweets] if (type(tweets)==Tweet) else tweets
         
         for tweet in tweet_list:
-            text = tweet.data
+            text = tweet.text
             text = TextHandler.remove_links(text)
             #text = TextHandler.remove_tokens(text)
             #text = TextHandler.remove_ponctuations(text)
@@ -36,7 +36,7 @@ class TweetHandler:
         with open('data.csv', 'a',) as csvfile:
             writer = csv.writer(csvfile)
             for tweet in tweet_list:
-                 writer.writerow([tweet.id, tweet.data])
+                 writer.writerow([tweet.id, tweet.text])
             
         
 

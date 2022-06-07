@@ -74,12 +74,12 @@ class TweetStreamer(tweepy.StreamingClient):
         self.tweets.append(tweet)
         
         time_now = time.time() 
-        if(time_now - self.last_save >= 60):
+        if(time_now - self.last_save >= 10):
             TweetHandler.to_csv(self.tweets, self.file_path)
             self.last_save = time_now
     
     def start(self, threaded=True):
-        super().sample(threaded)
+        super().sample(threaded = threaded)
     
     def stop(self):
         super().disconnect()
