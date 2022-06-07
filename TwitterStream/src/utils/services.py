@@ -1,6 +1,7 @@
 import tweepy
 from src.config import TwitterAccess
-
+from src.handlers import TweetHandler
+import time
 
 class TweepyConnector:
     
@@ -12,9 +13,10 @@ class TweepyConnector:
                                TwitterAccess.access_token_secret)
         return client
     
-    def get_streaming_client():
-        streamer = tweepy.StreamingClient(TwitterAccess.bearer_token)
-        return streamer
+    # SE TIVER OUTROS STREAMERS MANTER A FUNÇÃO
+    # TODO
+    def get_streaming_conjunto1_params():
+        return (TwitterAccess.bearer_token)
 
 
 class TweetReader():
@@ -58,7 +60,21 @@ class TweetReader():
 
 
 
-class TweetStreamer:
+class TweetStreamer(tweepy.StreamingClient):
     
-    def __init__(self):
-        self.streamer = TweepyConnector.get_streaming_client()
+    def __init__(self, file_path):
+        super.__init__(TwitterAccess.bearer_token)
+        self.file_path = file_path
+        self.tweets = []
+        self.last_save = time.time()
+    
+    def on_tweet(self, tweet):
+        TweetHandler.clean(tweet)
+        TweetHandler.show(tweet)
+        self.tweets.append(tweet)
+        
+        time_now = time.time() 
+        if(time_now - self.last_save >= 60):
+            TweetHandler.to_csv(self.tweets, self.file_path)
+            self.last_save = time_now
+        
