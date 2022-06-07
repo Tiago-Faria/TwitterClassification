@@ -29,11 +29,11 @@ class TweetHandler:
 
         columns = ['id', 'text']
         if (not os.path.exists(file_path)):
-            with open(file_path, 'w',) as csvfile:
+            with open(file_path, 'w', encoding="utf-8") as csvfile:
                 writer = csv.writer(csvfile)
                 writer.writerow(columns)
         
-        with open('data.csv', 'a', encoding="utf-8") as csvfile:
+        with open(file_path, 'a', encoding="utf-8") as csvfile:
             writer = csv.writer(csvfile)
             for tweet in tweet_list:
                  writer.writerow([tweet.id, str(tweet.text)])
