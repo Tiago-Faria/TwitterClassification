@@ -67,8 +67,12 @@ class TweetStreamer(tweepy.StreamingClient):
         self.file_path = file_path
         self.tweets = []
         self.last_save = time.time()
+
+        self.languages = ['en']
     
     def on_tweet(self, tweet):
+        if(tweet.lang not in self.languages):
+            return
         TweetHandler.clean(tweet)
         TweetHandler.show(tweet)
         self.tweets.append(tweet)
@@ -81,8 +85,9 @@ class TweetStreamer(tweepy.StreamingClient):
         self.save_tweets()
 
     def start(self, threaded=True):
-        super().sample(threaded = threaded)
+        super().sample(tweet_fields = ['lang'], threaded = threaded)
     
+
     def stop(self):
         super().disconnect()
     
