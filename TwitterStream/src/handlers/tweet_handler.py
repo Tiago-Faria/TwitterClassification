@@ -33,10 +33,10 @@ class TweetHandler:
                 writer = csv.writer(csvfile)
                 writer.writerow(columns)
         
-        with open('data.csv', 'a',) as csvfile:
+        with open('data.csv', 'a', encoding="utf-8") as csvfile:
             writer = csv.writer(csvfile)
             for tweet in tweet_list:
-                 writer.writerow([tweet.id, tweet.text])
+                 writer.writerow([tweet.id, str(tweet.text)])
             
         
 
