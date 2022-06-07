@@ -1,5 +1,6 @@
 from tweepy import Tweet
-
+import os
+import csv
 class TweetHandler:
         
     def print(tweet):
@@ -13,15 +14,31 @@ class TweetHandler:
         for tweet in tweet_list:
             TweetHandler.print(tweet)
     
-    def clean_texts(tweets):
+    def clean(tweets):
         tweet_list = [tweets] if (type(tweets)==Tweet) else tweets
         
         for tweet in tweet_list:
-            text = tweet.text
+            text = tweet.data
             text = TextHandler.remove_links(text)
             #text = TextHandler.remove_tokens(text)
             #text = TextHandler.remove_ponctuations(text)
             tweet.text = text
+    
+    def to_csv(tweets, file_path):
+        tweet_list = [tweets] if (type(tweets)==Tweet) else tweets
+
+        columns = ['id', 'text']
+        if (not os.path.exists(file_path)):
+            with open(file_path, 'w',) as csvfile:
+                writer = csv.writer(csvfile)
+                writer.writerow(columns)
+        
+        with open('data.csv', 'a',) as csvfile:
+            writer = csv.writer(csvfile)
+            for tweet in tweet_list:
+                 writer.writerow([tweet.id, tweet.data])
+            
+        
 
 
 class TextHandler:
