@@ -70,6 +70,9 @@ class TweetStreamer(tweepy.StreamingClient):
 
         self.languages = ['en']
     
+    def set_languages(self, languages):
+        self.languages = languages
+        
     def on_tweet(self, tweet):
         if(tweet.lang not in self.languages):
             return
