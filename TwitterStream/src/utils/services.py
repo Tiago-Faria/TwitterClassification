@@ -62,12 +62,14 @@ class TweetReader():
 
 class TweetStreamer(tweepy.StreamingClient):
     
-    def __init__(self, file_path):
+    def __init__(self, file_path, saving_time=20, verbose=True):
         super().__init__(TwitterAccess.bearer_token)
         self.file_path = file_path
+        self.verbose = verbose
+        
         self.tweets = []
         self.last_save = time.time()
-
+        self.saving_time = saving_time
         self.languages = ['en']
     
     def set_languages(self, languages):
@@ -77,17 +79,18 @@ class TweetStreamer(tweepy.StreamingClient):
         if(tweet.lang not in self.languages):
             return
         TweetHandler.clean(tweet)
-        TweetHandler.show(tweet)
         self.tweets.append(tweet)
         
         time_now = time.time() 
-        if(time.time() - self.last_save >= 20):
+        if(time.time() - self.last_save >= self.saving_time):
             self.save_tweets(timestamp = time_now)
     
     def on_closed(self, response):
         self.save_tweets()
 
     def start(self, threaded=True):
+        if (self.verbose):
+            print(f'Starting saving tweets every {self.saving_time} seconds!\n')
         super().sample(tweet_fields = ['lang'], threaded = threaded)
     
 
@@ -95,6 +98,9 @@ class TweetStreamer(tweepy.StreamingClient):
         super().disconnect()
     
     def save_tweets(self, timestamp=None):
+        if (self.verbose):
+            print(f'Saving {len(self.tweets)} tweets...')
+            
         TweetHandler.to_csv(self.tweets, self.file_path)
         self.tweets = []
         if timestamp is not None:
