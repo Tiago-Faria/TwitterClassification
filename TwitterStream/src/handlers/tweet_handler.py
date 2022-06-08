@@ -1,6 +1,7 @@
 from tweepy import Tweet
 import os
 import csv
+import re
 class TweetHandler:
         
     def print(tweet):
@@ -20,7 +21,7 @@ class TweetHandler:
         for tweet in tweet_list:
             text = tweet.text
             text = TextHandler.remove_links(text)
-            text = TextHandler.remove_substr_from_text(text, '\n')
+            text = TextHandler.remove_whitespaces(text)
             #text = TextHandler.remove_tokens(text)
             #text = TextHandler.remove_ponctuations(text)
             tweet.text = text
@@ -54,6 +55,9 @@ class TextHandler:
             text = text[:http_inicio] + '__link__' + text[http_inicio + http_len:]
             http_inicio = text.find('https://')
         return text
+    
+    def remove_whitespaces(text):
+        return re.sub('\s+', ' ', text)
 
     def remove_substr_from_text(text,substr):
         return text.replace(substr,' ')
