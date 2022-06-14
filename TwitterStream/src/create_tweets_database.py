@@ -6,7 +6,7 @@ import time
 
 
 def __main__():
-    create_database(max_read_time = 42)
+    create_database(max_read_time = 60)
 
 
 def create_database(max_read_time:int):
