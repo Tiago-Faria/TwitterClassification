@@ -8,18 +8,20 @@ class DataHandler:
 
     def clean_csv(self, file_path):
         df = pd.read_csv(file_path)
-
-        #removing undesired terms
+        
+        # Remove undesired attributes
         self.remove_terms(['__link__', 'RT :'], df)
         self.remove_regex(['@\w+'], df)
-
         self.remove_accent_marks(df)
-
         df = self.remove_duplicated_text(df)
+        
+        # Extract desired attributes
+        df['hashtags'] = df.text.str.findall('#\w+')
+        self.remove_regex(['#\w+'], df)
+        
+
 
         
-        df['hashtags'] = df.text.str.findall('#\w+')
-        self.remove_terms(['#\w+'], df)
         
         #df['word_count'] = df.text.apply(lambda x: len(x.split(' ')))
 
