@@ -18,14 +18,14 @@ class DataHandler:
         # Extract desired attributes
         df['hashtags'] = df.text.str.findall('#\w+')
         self.remove_regex(['#\w+'], df)
+
+        # Remove remaining artifacts
+        df.text = df.text.str.extract('(\w.*)')
+        df.text = df.text.str.replace('#', '')
+        df.text = df.text.str.strip()
+        df.text = df.text.str.capitalize()
         
 
-
-        
-        
-        #df['word_count'] = df.text.apply(lambda x: len(x.split(' ')))
-
-        #df = df[(df.word_count >= 3) | (df.hashtags.str.len() > 0) ]
 
     def remove_terms(self, terms, df):
         for term in terms:
