@@ -6,7 +6,7 @@ import time
 
 
 def __main__():
-    create_database(max_read_time = 60)
+    create_database(max_read_time = 10800)
 
 
 def create_database(max_read_time:int):
@@ -16,7 +16,7 @@ def create_database(max_read_time:int):
         max_read_time (int): maximum time to read tweets
     """
 
-    tweet_streamer = TweetStreamer("TwitterStream/data/base_test.csv")
+    tweet_streamer = TweetStreamer("TwitterStream/data/random_tweets.csv")
     tweet_streamer.start()
 
     time.sleep(max_read_time)

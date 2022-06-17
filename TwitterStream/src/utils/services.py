@@ -91,7 +91,7 @@ class TweetStreamer(tweepy.StreamingClient):
     def start(self, threaded=True):
         if (self.verbose):
             print(f'Starting saving tweets every {self.saving_time} seconds!\n')
-        super().sample(tweet_fields = ['lang'], threaded = threaded)
+        super().sample(tweet_fields = ['lang','context_annotations','entities'], threaded = threaded)
     
 
     def stop(self):

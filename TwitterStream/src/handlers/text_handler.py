@@ -1,3 +1,4 @@
+import re
 class TextHandler:
     
     def remove_links(text):

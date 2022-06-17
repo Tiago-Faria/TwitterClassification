@@ -2,7 +2,6 @@ from tweepy import Tweet
 from src.handlers import TextHandler
 import os
 import csv
-import re
 class TweetHandler:
         
     def print(tweet):
@@ -30,7 +29,7 @@ class TweetHandler:
     def to_csv(tweets, file_path):
         tweet_list = [tweets] if (type(tweets)==Tweet) else tweets
 
-        columns = ['id', 'text']
+        columns = ['id', 'text','context_annotations','entities']
         if (not os.path.exists(file_path)):
             with open(file_path, 'w', encoding="utf-8", newline='') as csvfile:
                 writer = csv.writer(csvfile)
@@ -39,7 +38,7 @@ class TweetHandler:
         with open(file_path, 'a', encoding="utf-8", newline='') as csvfile:
             writer = csv.writer(csvfile)
             for tweet in tweet_list:
-                 writer.writerow([tweet.id, str(tweet.text)])
+                 writer.writerow([tweet.id, str(tweet.text), str(tweet.context_annotations), str(tweet.entities)])
             
         
 

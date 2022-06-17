@@ -134,3 +134,4 @@ dmypy.json
 
 # chaves de acesso
 /TwitterStream/authKeys.py
+/TwitterStream/data/random_tweets.csv
