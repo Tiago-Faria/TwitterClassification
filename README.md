@@ -10,8 +10,11 @@ These vectors were built in order to represent the semantical distance of englis
 It was used a Twitter context to extract the vectors containing 2B tweets and 1.2M words.
 
 The links for the APIs and the Glove data are:
+
 https://developer.twitter.com/en/docs/twitter-api/tweets/volume-streams/introduction
+
 https://docs.tweepy.org/en/stable/streamingclient.html
+
 https://nlp.stanford.edu/projects/glove/
 
 
